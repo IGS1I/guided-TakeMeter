@@ -2,7 +2,7 @@
 
 A fine-tuned text classifier that evaluates discourse quality in an online community.
 
-*Demo:* [Youtube Link]([https://youtu.be/5de43aLfxW8](https://youtu.be/ygiJUhDgbss))
+*Demo:* [Youtube Link](https://youtu.be/ygiJUhDgbss)
 
 **Chosen community:** Anime
 
