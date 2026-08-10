@@ -142,6 +142,8 @@ per_device_train_batch_size=25,
 per_device_eval_batch_size=50,
 ```
 
+The purpose of the adjustment is to increase the model's accuracy. The purpose of the baseline is to see the work of my data, so I want to make sure my model benefits from the training data.
+
 ## Baseline Comparison (Trained vs. Untrained)
 
 To preface Groq was my zero-shot baseline for my data and 33 responses from the model could not be parsed since my prompt was too large and had a slight naming issue.
