@@ -134,13 +134,21 @@ analyst            14
 
 ## Fine-Tuning Pipeline
 
+Adjusted hyperparameters for my model run:
+
+```python
+num_train_epochs=5,
+per_device_train_batch_size=25,
+per_device_eval_batch_size=50,
+```
+
 ## Baseline Comparison (Trained vs. Untrained)
 
-To preface Groq was my zero-shot baseline of my data and 33 responses from the model could not be parsed since my prompt was too large.
+To preface Groq was my zero-shot baseline for my data and 33 responses from the model could not be parsed since my prompt was too large and had a slight naming issue.
 
-I was given an 429 API Error: 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kt9mgwyye06b5a2yqd3qhtjg` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98467, Requested 1776. Please try again in 3m29.952s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'
+I was given 429 API Errors like this: 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kt9mgwyye06b5a2yqd3qhtjg` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98467, Requested 1776. Please try again in 3m29.952s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'
 
-Here is the comparison though:
+However, here is the baseline and comparison:
 
 ### Groq Baseline
 
@@ -182,3 +190,79 @@ Per-class metrics (baseline):
 ### Spec (planning.md)
 
 The Spec helped me out tremendously. I got to plan my version of the TakeMeter project effortlessly, only needing to choose a domain and fitting labels. Data procurement was of course the most time consuming, and having planning.nd already filled out eith examples for aeach label helped me in discerning wich post/comment is which.
+
+## Misc
+
+### Erroneous Prompt
+
+Here is the prompt that used up the Groq credits. It was 7824 characters long:
+
+```python
+SYSTEM_PROMPT = """
+
+You are classifying Reviews/comments from the Anime Community.
+
+Assign each post to exactly one of the following categories.
+
+
+
+Analyst: a structured argument backed by statistics or historical comparison, evidence that is specific and verifiable.
+
+Example: "This show is funny in that it get's a lot of hate from the anti-fascist crowd, and has an incredible amount of hype. And to be honest, it doesn't really deserve either of these. Ignoring the Nazi allegations(they are indeed false) what people need to remember, is that this is fundamentally a low effort Isekai. Sure, it has a very unique premise and world, and sure there's some flashy fights, but this show doesn't have a lot of depth.
+
+
+
+I feel like I shouldn't need to do this, and if you feel like it's obvious this isn't about Nazi's feel free to skip, but I have read the manga, LN, and web novel for this, and can pretty confidently tell you this is not the direct equivalent of Nazi Germany some people feel it is and hate it for. If this was a propaganda piece for Nazi's I could understand getting butthurt about it, but its really not. This show is also able to officially air in Germany, and if there was anything remotely pro fascist about it, than this show wouldn't have a snowballs chance in hell to be able to air there lol. It's pretty clear through the actions of characters in the show, as well as what the author has said, that the Empire is analogous with ww1 Germany, stuck in the position of ww2 Germany. If you disagree, notice we have General 'Rudersdorf', who is almost certainly the equivalent of General Ludendorff(see the naming similarities?), who served on the Imperial German Army's Supreme Army Command(similar position). Additionally, notice the lack of mass murder, dictators, or fanatical SS units? Instead we have an Imperial family, interior lines strategy(ww1 tactics), ww1 generals, the Legadonia 'Entente Alliance'(bruh they literally managed to fit the entente in here), and trench warfare. Most definitely not the ww2 political equivalent. Then again, they get stuck in ww2 wars(and have Rommel lol) which is how the casual observer seems to be able to identify Nazi Germany as Nazi Germany, sidestepping literally everything that actually made the Nazi's, Nazi's.
+
+
+
+THE GOOD
+
+As for my enjoyment? I actually liked this, and i am probably biased because fantasy military anime with a charming touch of geopolitics is right up my alley, nerd alert, but I feel there's a lot to like here. First off, the premise is really unique. We haven't seen any mainstream anime's try to deal with ww2 in decades, and this one adds isekai, genderbender, god, and capitalist simping to the mix. Its kinda fun. Also the MC is straight up psychotic which is also cool. His/her? backstory is being sociopathic HR guy who gets killed for being an asshole, doesn't realize it, then gets turned into a little girl and sent to ww2 for then being an asshole to god and still not noticing? Actually sounds hilarious.
+
+Additionally, i think the show IS kinda funny, like it isn't a comedy by any means, but it does manage to incorporate dark humor and absurd humor which both work in this situation.
+
+Additionally, and this is gonna sound like a nitpick, but it actually manages to keep all the mains and sides acting like their contextually supposed to. A lot of show's have their author's thoughts and values bleed over into their characters, making them do, say, and think stuff which doesn't really align with the situation their in, and this show manages to avoid a lot of that self insert, for which i'm really glad.
+
+
+
+THE MIXED
+
+As for the actual content of the show? It is straight up ripped from the LN. Which is good in that it follows the source material, but it does feel like copied homework without any original interpretation; and it's not even adapted all that well. If you ever feel like the pace is weird sometimes or the bits between episodes is jarring, then this is it. I can't imagine any of the budget went into story. On a side note, this is why i feel confident doing a review while only halfway through, i highly doubt their going to pull some insane trick out of their hat while moving like this lol. The only unique bit is the exact timing of when Mary Sue is annoying, and even then, that's not all that impressive. In the Web novel, the LN, and Manga she show's up at different times so it seems they were forced to just say 'screw it'
+
+
+
+THE UGLY
+
+Now I'll still continue to like this because I like specific things and enjoyed it for the reasons above, but I'm not exactly sure I can recommend this to anyone because of how flat the characters are. Other than Tanya being a sociopathic HR guy, everyone else has next to 0 backstory, nobody changes at all except to get better at fighting, and nobody seems to have realistic human problems/emotions/development to talk about. There is nothing in the personal lives of these characters that's going to keep me pondering past their time on the screen. Which is a real shame as characters are some of THE most important parts of a story, they are literally the main device for keeping you engaged with the story. Honestly this is quite tragic.
+
+
+
+The story itself, beyond ww2 countries invade each other rahhh, is kinda flat. For most people, braindead watching something in the background while they try to forget their day or do homework, this is great, for everyone else, you might have a problem. If you push it, you can see commentary on Concorde syndrome and Germany historically, or the dangers of overspecializing and being blind to alternative points of view, maybe even something about capitalism/communism, but really, this story doesn't have much of a theme. If you're watching, your here for germans and soviets killing each other, and maybe even loli's if you're weird."
+
+Hot Take Lover: a bold, confident and some times outrageous opinion stated without a breadth of supporting evidence; a claim that might be true, and a post that asserts rather than argues.
+
+Example: "I smile like a total idiot through this entire show every single Sunday. Best rom-com of the year hands down."
+
+Reactionista: an immediate emotional response to a specific event; Almost no arguments, expressing a feeling in the moment
+
+Example: "Was hoping a little more would happen this episode but animation was great nonetheless. Can they not place something in front of the kids to block their path??? Loved the snow moss head moment with zoro and sanji… and the light punch from luffy to knock out Loki"
+
+Armchair Critic: a casual opinion that is not too structured or loose. Can make fun of something contextually relevant, or critic a a series in layman terms; a casual explanation.
+
+Example: originally, i thought this show was a hentai. it looks like a hentai with the art/animation quality. I watched a few episodes but it was a very difficult watch and there is nothing really interesting going on story wise either. The story basically could be the same as a hentai if you think about it too. It's a very simple show and also very unrealistic. It also promotes unhealthy habits like smoking and staying up late so I hope it's not kids watching this. Also, the MC is so clueless and dense throughout the whole thing it is actually insufferable to watch
+
+I wonder what type of person enjoys this show and why? I suspect it's someone that has never experienced romance so that they could find this strange type of romance dynamic to be believable and actually enjoy it. For me, it was not possible to watch without cringing and wincing. Romance is generally pretty bad in anime, but this one might take the cake
+
+Respond with ONLY the label name.
+
+Do not explain your reasoning.
+
+Valid labels:
+
+Analyst
+Hot Take Lover
+Reactionista
+Arcmchair Critic
+"""
+```
