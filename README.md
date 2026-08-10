@@ -143,18 +143,23 @@ I was given an 429 API Error: 'Rate limit reached for model `llama-3.3-70b-versa
 Here is the comparison though:
 
 ### Groq Baseline
+
+🎯 Baseline accuracy: 0.923  (evaluated on 26/59 parseable responses)
+
 Per-class metrics (baseline):
-                 precision    recall  f1-score   support
 
-        analyst       1.00      1.00      1.00        12
- hot_take_lover       0.00      0.00      0.00         1
-   reactionista       0.86      1.00      0.92        12
-armchair_critic       0.00      0.00      0.00         1
+| label | precision | recall | f1-score | support |
+| ----- | --------- | ------ | -------- | ------- |
+| analyst | 1.00 | 1.00 | 1.00 | 12 |
+| hot_take_lover | 0.00 | 0.00 | 0.00 | 1 |
+| reactionista | 0.86 | 1.00 | 0.92 | 12 |
+| armchair_critic | 0.00 | 0.00 | 0.00 | 1 |
 
-       accuracy                           0.92        26
-      macro avg       0.46      0.50      0.48        26
-   weighted avg       0.86      0.92      0.89        26
-
+| metric | precision | recall | f1-score | support |
+| ----- | --------- | ------ | -------- | ------- |
+| accuracy | - | - | 0.92 | 26 |
+| macro avg | 0.46 | 0.50 | 0.48 | 26 |
+| weighted avg | 0.86 | 0.92 | 0.89 | 26 |
 
 ## Evaluation Report and Error Analysis
 
