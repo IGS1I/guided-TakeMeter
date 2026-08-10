@@ -73,7 +73,7 @@ Stretch: An untrained model will be used as a base case for classification, ensu
     Also why are conversations so bland even though they should be kind of deep and emotional. Same with humor, it doesn't exist but there is again some try hard boring call it "funny" scenes.
     Overall this anime is biggest disappointment of the last 3 decades. There were worse anime, but none of them were praised before this. They were pushed under the rug. I want to give it a 1, but I will go with two since i do know a lot of people kind of liked it. I don't know anyone who really liked it to give it a 10 so this rating feels unreal to me.
 
-- Reactionista -- an immediate emotional response to a specific event. Almost no arguments, expressing a feeling in the moment. Usually right after finishing a series or episode.
+- Reactionista -- an immediate emotional response to a specific event; Almost no arguments, expressing a feeling in the moment. Usually right after finishing a series or episode.
 
   - Examples:
     1) [r/anime, samby69] Was hoping a little more would happen this episode but animation was great nonetheless. Can they not place something in front of the kids to block their path??? Loved the snow moss head moment with zoro and sanji… and the light punch from luffy to knock out Loki

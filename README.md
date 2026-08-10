@@ -136,6 +136,26 @@ analyst            14
 
 ## Baseline Comparison (Trained vs. Untrained)
 
+To preface Groq was my zero-shot baseline of my data and 33 responses from the model could not be parsed since my prompt was too large.
+
+I was given an 429 API Error: 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kt9mgwyye06b5a2yqd3qhtjg` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98467, Requested 1776. Please try again in 3m29.952s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'
+
+Here is the comparison though:
+
+### Groq Baseline
+Per-class metrics (baseline):
+                 precision    recall  f1-score   support
+
+        analyst       1.00      1.00      1.00        12
+ hot_take_lover       0.00      0.00      0.00         1
+   reactionista       0.86      1.00      0.92        12
+armchair_critic       0.00      0.00      0.00         1
+
+       accuracy                           0.92        26
+      macro avg       0.46      0.50      0.48        26
+   weighted avg       0.86      0.92      0.89        26
+
+
 ## Evaluation Report and Error Analysis
 
 ## Reflections
