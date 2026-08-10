@@ -2,6 +2,8 @@
 
 A fine-tuned text classifier that evaluates discourse quality in an online community.
 
+*Demo:* [Youtube Link](https://youtu.be/5de43aLfxW8)
+
 **Chosen community:** Anime
 
 - **Data Sources:** [My Anime List (MAL)](https://myanimelist.net/) and [r/anime](https://www.reddit.com/r/anime/)
