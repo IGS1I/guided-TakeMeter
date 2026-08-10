@@ -101,6 +101,37 @@ Stretch: An untrained model will be used as a base case for classification, ensu
 
 Utilized repositiory to choose community and plan out labels in `planning.md`, while [Google Colab](https://colab.research.google.com/drive/1WvQlXC5p_0PKzOfASEZ-SjlBkKiIHyf3?usp=sharing) was used to split data set (`data_set_200.csv`) into training, testing, validation and more.
 
+## Distributions
+
+Total examples: 392
+
+Label distribution:
+label
+armchair_critic    100
+reactionista       100
+hot_take_lover      98
+analyst             94
+
+### Splits
+
+Train: 274 examples
+Validation: 59 examples
+Test: 59 examples
+
+Train label distribution:
+label
+reactionista       70
+armchair_critic    70
+hot_take_lover     68
+analyst            66
+
+Test label distribution:
+label
+armchair_critic    15
+hot_take_lover     15
+reactionista       15
+analyst            14
+
 ## Fine-Tuning Pipeline
 
 ## Baseline Comparison (Trained vs. Untrained)
