@@ -127,6 +127,8 @@ I will try to honor this distribution. The site split is less likely, while each
   - 25 Reactionistas
   - 25 Armchair Critics
 
+  Ended up with ~ 400 samples instead
+
 ## Evaluation metrics
 <!-- Which metrics will you use to evaluate your model and why are those right ones for this specific task? (Accuracy alone is not enough--explain what else you need and why) -->
 
