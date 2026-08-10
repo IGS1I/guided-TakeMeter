@@ -143,7 +143,7 @@ chosen model: distilbert-base-uncased model
 Title: Fine-Tuning PipeLine for distilbert-base-uncased model
 ---
 graph LR
-  A[Load Model with Classification head] --> B([Compute Metrics]) --> C[Set & Run Trainer based on Hyperparameters] --> D[Evaluate model on testing set] --> E[Print Outputs]
+  A[Load Model] --> B([Compute Metrics]) --> C[Set & Run Trainer based on parameters] --> D[Evaluate model on test set] --> E[Print Outputs]
 
   C --> H([Edit Parameters and retry]) --> C
 
@@ -154,11 +154,24 @@ graph LR
 
 ## Baseline Comparison (Trained vs. Untrained)
 
-To preface Groq was my zero-shot baseline for my data and 33 responses from the model could not be parsed since my prompt was too large and had a slight naming issue.
+| Model | Accuracy |
+| ------- | -------- |
+| Zero-shot baseline (Groq) | 0.923 |
+| Fine-tuned DistilBERT | 0.831 |
 
-I was given 429 API Errors like this: 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kt9mgwyye06b5a2yqd3qhtjg` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98467, Requested 1776. Please try again in 3m29.952s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'
+**Fine-tuning regression:** 0.093
 
-However, here is the baseline and comparison:
+## Evaluation Report and Error Analysis
+
+To preface my Groq zero-shot baseline was partial with 33 non-parsable responses becasue my prompt was too large and I misplelled a label (armchair_critic).
+
+I was given 429 API Errors like this:
+
+``` python
+ 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kt9mgwyye06b5a2yqd3qhtjg` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98467, Requested 1776. Please try again in 3m29.952s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'
+```
+
+Despite that error, here are the in-depth details of the baseline run and my fine-tuned run against the testing data:
 
 ### Groq Baseline (Untrained)
 
@@ -179,7 +192,7 @@ Per-class metrics (baseline):
 | macro avg | 0.46 | 0.50 | 0.48 | 26 |
 | weighted avg | 0.86 | 0.92 | 0.89 | 26 |
 
-### distilbert-base-uncased model (Trained)
+### distilbert-base-uncased (Trained)
 
 Adjusted hyperparameters for my model run:
 
@@ -192,6 +205,8 @@ per_device_eval_batch_size=50,
 The purpose of the adjustment is to increase the model's accuracy. The purpose of the baseline is to see the work of my data, so I want to make sure my model benefits from the training data.
 
 #### Epoch Showcase
+
+Here are the results of my fine-tuning. Accuracy increased the more training attempts the model was given, up to a point.
 
 |Epoch|Training Loss|Validation Loss|Accuracy|
 |-----|-------------|---------------|--------|
@@ -305,21 +320,6 @@ Text:      Ayanokoji is just cringey edgelord bait for middle schoolers.
 True:      hot_take_lover
 
 Predicted: armchair_critic  (confidence: 0.36)
-
-## Evaluation Report and Error Analysis
-
-==================================================
-RESULTS COMPARISON
-==================================================
-Model                               Accuracy
----------------------------------------------
-Zero-shot baseline (Groq)              0.923
-Fine-tuned DistilBERT                  0.831
----------------------------------------------
-
-Fine-tuning regression: 0.093
-
-Use these numbers in your README evaluation report.
 
 
 ## Reflections
