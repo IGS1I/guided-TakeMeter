@@ -134,15 +134,23 @@ analyst            14
 
 ## Fine-Tuning Pipeline
 
-Adjusted hyperparameters for my model run:
+Here is a visual representation of how fune-tuning can be run to train the chosen model
 
-```python
-num_train_epochs=5,
-per_device_train_batch_size=25,
-per_device_eval_batch_size=50,
+chosen model: distilbert-base-uncased model
+
+```mermaid
+---
+Title: Fine-Tuning PipeLine for distilbert-base-uncased model
+---
+graph LR
+  A[Load Model with Classification head] --> B([Compute Metrics]) --> C[Set & Run Trainer based on Hyperparameters] --> D[Evaluate model on testing set] --> E[Print Outputs]
+
+  C --> H([Edit Parameters and retry]) --> C
+
+  E --> F(Confusion Matrix)
+  E --> G(Wrong Predictions)
+  E --> H
 ```
-
-The purpose of the adjustment is to increase the model's accuracy. The purpose of the baseline is to see the work of my data, so I want to make sure my model benefits from the training data.
 
 ## Baseline Comparison (Trained vs. Untrained)
 
@@ -152,7 +160,7 @@ I was given 429 API Errors like this: 'Rate limit reached for model `llama-3.3-7
 
 However, here is the baseline and comparison:
 
-### Groq Baseline
+### Groq Baseline (Untrained)
 
 🎯 Baseline accuracy: 0.923  (evaluated on 26/59 parseable responses)
 
@@ -171,7 +179,148 @@ Per-class metrics (baseline):
 | macro avg | 0.46 | 0.50 | 0.48 | 26 |
 | weighted avg | 0.86 | 0.92 | 0.89 | 26 |
 
+### distilbert-base-uncased model (Trained)
+
+Adjusted hyperparameters for my model run:
+
+```python
+num_train_epochs=5,
+per_device_train_batch_size=25,
+per_device_eval_batch_size=50,
+```
+
+The purpose of the adjustment is to increase the model's accuracy. The purpose of the baseline is to see the work of my data, so I want to make sure my model benefits from the training data.
+
+#### Epoch Showcase
+
+|Epoch|Training Loss|Validation Loss|Accuracy|
+|-----|-------------|---------------|--------|
+|1|1.383392|1.372990|0.254237|
+|2|1.348627|1.317716|0.559322|
+|3|1.271565|1.181951|0.728814|
+|4|1.107261|0.926515|0.813559|
+|5|0.838836|0.690908|0.813559|
+
+#### Results
+
+🎯 Fine-Tuned model accuracy: 0.831
+
+Per-class metrics (fine-tuned model):
+
+| label | precision | recall | f1-score | support |
+| ----- | --------- | ------ | -------- | ------- |
+| analyst | 1.00 | 0.93 | 0.96 | 14 |
+| hot_take_lover | 0.89 | 0.53 | 0.67 | 15 |
+| reactionista | 1.00 | 0.87 | 0.93 | 15 |
+| armchair_critic | 0.62 | 1.00 | 0.77 | 15 |
+
+| metric | precision | recall | f1-score | support |
+| ----- | --------- | ------ | -------- | ------- |
+| accuracy | - | - | 0.83 | 59 |
+| macro avg | 0.88 | 0.83 | 0.83 | 59 |
+| weighted avg | 0.88 | 0.83 | 0.83 | 59 |
+
+**Confusion Matrix**
+![The Confusion Matrix is also stored at consfusion_matrix.png.](colab_output/confusion_matrix.png)
+
+**Wrong Predictions:** 10/59
+
+--- #1 ---
+
+Text:      Fate fights look pretty, but I couldn't care less about any of the characters involved.
+
+True:      hot_take_lover
+
+Predicted: armchair_critic  (confidence: 0.36)
+
+--- #2 ---
+
+Text:      Lelouch is a terrible strategist who only survived because every other character in Code Geass has negative IQ.
+
+True:      hot_take_lover
+
+Predicted: armchair_critic  (confidence: 0.33)
+
+--- #3 ---
+
+Text:      MEGUMIN'S EXPLOSION SPELL ANIMATION IS GETTING BETTER EVERY SINGLE EPISODE LMAO YES!
+
+True:      reactionista
+
+Predicted: hot_take_lover  (confidence: 0.29)
+
+--- #4 ---
+
+Text:      It's getting a 1 solely because someone actually allowed Mori Calliope to put her pathetic excuse for "music" in this show. One of the sequences that features her "music" is completely unskippable, wh...
+
+True:      hot_take_lover
+
+Predicted: armchair_critic  (confidence: 0.36)
+
+--- #5 ---
+
+Text:      Katana Man vs Denji on the train was so hype! The sound design was crazy good!
+
+True:      reactionista
+
+Predicted: armchair_critic  (confidence: 0.30)
+
+--- #6 ---
+
+Text:      Snoozefest, nothing happens and when something happens it's obvious, cheap and insignificant, by the way 1/4(sometimes even half) of the most episodes is flashbacks to the other mediocre characters th...
+
+True:      hot_take_lover
+
+Predicted: armchair_critic  (confidence: 0.38)
+
+--- #7 ---
+
+Text:      This is the worst shit I've ever watched in my life. School Days is better than this Cocomelon-level show.
+Watching paint dry is more exiting and intriguing than watching this slop that dares to call ...
+
+True:      hot_take_lover
+
+Predicted: armchair_critic  (confidence: 0.36)
+
+--- #8 ---
+
+Text:      I would have never expected to find this anime, came across on youtube and holy, it's so good. The animation, effects are smooth af. The first episode's first few scenes itself got me hooked. But it's...
+
+True:      analyst
+
+Predicted: armchair_critic  (confidence: 0.40)
+
+--- #9 ---
+
+Text:      SAO Season 1 first arc was actually a 10/10 and everything that came after ruined its legacy.
+
+True:      hot_take_lover
+
+Predicted: armchair_critic  (confidence: 0.31)
+
+--- #10 ---
+
+Text:      Ayanokoji is just cringey edgelord bait for middle schoolers.
+
+True:      hot_take_lover
+
+Predicted: armchair_critic  (confidence: 0.36)
+
 ## Evaluation Report and Error Analysis
+
+==================================================
+RESULTS COMPARISON
+==================================================
+Model                               Accuracy
+---------------------------------------------
+Zero-shot baseline (Groq)              0.923
+Fine-tuned DistilBERT                  0.831
+---------------------------------------------
+
+Fine-tuning regression: 0.093
+
+Use these numbers in your README evaluation report.
+
 
 ## Reflections
 
